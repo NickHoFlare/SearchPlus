@@ -1,7 +1,7 @@
 import express from 'express';
-import { indexRouter } from './src/routes';
-import { testRouter } from './src/routes/test';
 import dotenv from 'dotenv';
+import { routeListRouter, duckDuckGoRouter, googleRouter, bingRouter } from './src/routes';
+
 
 // Configure dotenv for .env environment variable support
 dotenv.config();
@@ -12,8 +12,10 @@ const port = process.env.PORT;
 app.use(express.json());
 
 // routes
-app.use('/', indexRouter)
-app.use('/test', testRouter);
+app.use('/', routeListRouter)
+app.use('/duckduckgo', duckDuckGoRouter);
+app.use('/google', googleRouter);
+app.use('/bing', bingRouter);
 
 app.listen(port, () => {
     console.log(`The application is listening on port ${port}!`);
