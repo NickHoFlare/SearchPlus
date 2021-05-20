@@ -2,11 +2,12 @@
   "name": "api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "scripts": {
     "build": "tsc --project ./",
     "start": "nodemon index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "node .",
     "lint": "eslint --fix"
   },
   "keywords": [],
