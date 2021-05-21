@@ -1,4 +1,5 @@
-export interface BingResponse {
+// Note: Some fields have been left out e.g. bing specific links 
+export interface IBingResponse {
     _type: string,
     queryContext: QueryContext,
     webPages: WebPages,
@@ -6,7 +7,6 @@ export interface BingResponse {
     relatedSearches: RelatedSearches,
     videos: Videos,
     news: News,
-    spellSuggestion: SpellSuggestion,
     computation: Computation,
     timeZone: TimeZone,
     rankingResponse: RankingResponse,
@@ -15,63 +15,127 @@ export interface BingResponse {
     translations: Translations,
 }
 
-export interface QueryContext {
+export interface IQueryContext {
     originalQuery: string,
     alteredQuery: string
 }
 
-export interface WebPages {
+export interface IWebPages {
     totalEstimatedMatches: number,
     value: WebPageValue[]
 }
 
-export interface WebPageValue {
+export interface IWebPageValue {
     name: string,
     url: string,
     snippet: string,
     deepLinks: WebPageValue[]
 }
 
-export interface Images {
-    
+export interface IImages {
+    isFamilyFriendly: boolean,
+    value: IImagesValue[]
 }
 
-export interface RelatedSearches {
-    
+export interface IImagesValue {
+    name: string,
+    thumbnailUrl: string,
+    datePublished: Date,
+    contentUrl: string,
+    encodingFormat: string,
+    hostPageDisplayUrl: string
 }
 
-export interface Videos {
-    
+export interface IRelatedSearches {
+    value: { text: string }[]
 }
 
-export interface News {
-    
+export interface IVideos {
+    isFamilyFriendly: boolean,
+    value: IImagesValue[]
+} 
+
+export interface IVideosValue {
+    name: string,
+    description: string,
+    thumbnailUrl: string,
+    datePublished: Date,
+    publisher: { name: string }[],
+    contentUrl: string,
+    encodingFormat: string,
+    hostPageDisplayUrl: string,
+    viewCount: number
 }
 
-export interface SpellSuggestion {
-    
+export interface INews {
+    readLink: string,
+
 }
 
-export interface Computation {
-    
+export interface INewsValue {
+    name: string,
+    url: string,
+    image: { contentUrl: string, thumbNail: { contentUrl: string } },
+    description: string,
+    provider: INewsProvider,
+    datePublished: Date,
+    category: string
 }
 
-export interface TimeZone {
-    
+export interface INewsProvider {
+    _type: string,
+    name: string
 }
 
-export interface RankingResponse {
-    
+export interface IComputation {
+    expression: string,
+    value: string
 }
 
-export interface Entities {
-    
+export interface ITimeZone {
+    primaryCityTime: ICityTime,
+    otherCityTimes: ICityTime[]
 }
 
-export interface Places {
-    
+export interface ICityTime {
+    location: string,
+    time: Date,
+    utcOffset: string
 }
 
-export interface Translations {
-    
+export interface IEntities {
+    value: IEntityValue[]
+}
+
+export interface IEntityValue {
+    name: string,
+    entityPresentationInfo: IEntityPresentationInfo
+}
+
+export interface IEntityPresentationInfo {
+    entityScenario: string,
+    entityTypeHints: string[]
+}
+
+export interface IPlaces {
+    _type: string,
+    name: string,
+    url: string,
+    entityPresentationInfo: { entityTypeHints: string[] },
+    address: IAddress
+}
+
+export interface IAddress {
+    addressLocality: string,
+    addressRegion: string,
+    postalCode: string,
+    addressCountry: string,
+    neighborhood: string
+}
+
+export interface ITranslations {
+    originalText: string,
+    translatedText: string,
+    translatedLanguageName: string,
+    inLanguage: string
 }
