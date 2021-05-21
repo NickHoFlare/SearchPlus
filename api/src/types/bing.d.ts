@@ -15,11 +15,13 @@ export interface IBingResponse {
     translations: Translations,
 }
 
+// QueryContext
 export interface IQueryContext {
     originalQuery: string,
     alteredQuery: string
 }
 
+// WebPages
 export interface IWebPages {
     totalEstimatedMatches: number,
     value: WebPageValue[]
@@ -32,6 +34,7 @@ export interface IWebPageValue {
     deepLinks: WebPageValue[]
 }
 
+// Images
 export interface IImages {
     isFamilyFriendly: boolean,
     value: IImagesValue[]
@@ -46,10 +49,12 @@ export interface IImagesValue {
     hostPageDisplayUrl: string
 }
 
+// RelatedSearches
 export interface IRelatedSearches {
     value: { text: string }[]
 }
 
+// Videos
 export interface IVideos {
     isFamilyFriendly: boolean,
     value: IImagesValue[]
@@ -67,6 +72,7 @@ export interface IVideosValue {
     viewCount: number
 }
 
+// News
 export interface INews {
     readLink: string,
 
@@ -87,11 +93,13 @@ export interface INewsProvider {
     name: string
 }
 
+// Computation
 export interface IComputation {
     expression: string,
     value: string
 }
 
+// TimeZone
 export interface ITimeZone {
     primaryCityTime: ICityTime,
     otherCityTimes: ICityTime[]
@@ -103,6 +111,7 @@ export interface ICityTime {
     utcOffset: string
 }
 
+// Entities
 export interface IEntities {
     value: IEntityValue[]
 }
@@ -117,6 +126,7 @@ export interface IEntityPresentationInfo {
     entityTypeHints: string[]
 }
 
+// Places
 export interface IPlaces {
     _type: string,
     name: string,
@@ -133,6 +143,7 @@ export interface IAddress {
     neighborhood: string
 }
 
+// Translations
 export interface ITranslations {
     originalText: string,
     translatedText: string,
