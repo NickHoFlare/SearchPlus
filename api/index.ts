@@ -1,6 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import { routeListRouter, duckDuckGoRouter, googleRouter, bingRouter } from './src/routes';
+import { routeListRouter, duckDuckGoRouter, googleRouter, bingRouter, searchRouter } from './src/routes';
 
 
 // Configure dotenv for .env environment variable support
@@ -16,6 +16,7 @@ app.use('/', routeListRouter)
 app.use('/duckduckgo', duckDuckGoRouter);
 app.use('/google', googleRouter);
 app.use('/bing', bingRouter);
+app.use('/searchplus', searchRouter)
 
 app.listen(port, () => {
     console.log(`The application is listening on port ${port}!`);

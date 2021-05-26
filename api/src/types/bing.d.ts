@@ -1,18 +1,18 @@
 // Note: Some fields have been left out e.g. bing specific links 
 export interface IBingResponse {
     _type: string,
-    queryContext: QueryContext,
-    webPages: WebPages,
-    images: Images,
-    relatedSearches: RelatedSearches,
-    videos: Videos,
-    news: News,
-    computation: Computation,
-    timeZone: TimeZone,
-    rankingResponse: RankingResponse,
-    entities: Entities,
-    places: Places,
-    translations: Translations,
+    queryContext: IQueryContext,
+    webPages: IWebPages,
+    images: IImages,
+    relatedSearches: IRelatedSearches,
+    videos: IVideos,
+    news: INews,
+    computation: IComputation,
+    timeZone: ITimeZone,
+    rankingResponse: IRankingResponse,
+    entities: IEntities,
+    places: IPlaces,
+    translations: ITranslations,
 }
 
 // QueryContext
@@ -24,14 +24,14 @@ export interface IQueryContext {
 // WebPages
 export interface IWebPages {
     totalEstimatedMatches: number,
-    value: WebPageValue[]
+    value: IWebPageValue[]
 }
 
 export interface IWebPageValue {
     name: string,
     url: string,
     snippet: string,
-    deepLinks: WebPageValue[]
+    deepLinks: IWebPageValue[]
 }
 
 // Images
