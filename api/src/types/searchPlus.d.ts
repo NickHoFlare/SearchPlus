@@ -5,13 +5,13 @@ export interface ISearchPlusResponse {
 export interface ISimplifiedResponse{
     searchEngineName: string,
     snippet: string,
-    url: string,
+    mainUrl: string,
     totalResults: number,
     searchTerms: string,
     searchTime: number,
     entity?: string,
-    results: IResult[],
-    related: IRelated[]
+    results?: IResult[],
+    related?: IRelated[]
 }
 
 export interface IResult {

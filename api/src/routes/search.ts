@@ -27,6 +27,7 @@ searchRouter.get("/", async (req, res) => {
     const searchTerms = req.query.query;
 
     try {
+        // TODO: May have to implement header for cache-control: no-store, max-age: 0 to obtain accurate timings
         const bingRequest = axios.get<IBingResponse>(`${baseUrl}/bing?query=${searchTerms}`);
         const googleRequest = axios.get<IGoogleResponse>(`${baseUrl}/google?query=${searchTerms}`);
         const duckDuckGoRequest = axios.get<IDuckDuckGoResponse>(`${baseUrl}/duckduckgo?query=${searchTerms}`);

@@ -6,7 +6,8 @@ const routes = {
     routes: [
         "/duckduckgo",
         "/bing",
-        "/google"
+        "/google",
+        "/searchplus"
     ]
 };
 

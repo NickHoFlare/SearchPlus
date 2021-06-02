@@ -1,6 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { IBingResponse, IGoogleResponse, IDuckDuckGoResponse, ISearchPlusResponse } from '../types';
 import { IWebPageValue } from '../types/bing';
+import { IItem } from '../types/google';
 import { IRelated, IResult, ISimplifiedResponse } from '../types/searchPlus';
 
 export const mapResponses = 
@@ -8,21 +9,20 @@ export const mapResponses =
         : ISearchPlusResponse => {
     return {
         responses: [
-        mapBing(responses[0], durations[0]),
-        //mapGoogle(responses[1], durations[1]), 
-        //mapDuckDuckGo(responses[2], durations[2])
-    ]};
+            mapBing(responses[0], durations[0]),
+            mapGoogle(responses[1], durations[1]), 
+            //mapDuckDuckGo(responses[2], durations[2])
+        ]
+    };
 }
 
 const mapBing = (response: AxiosResponse<IBingResponse>, duration: number): ISimplifiedResponse => {
     const data = response.data;
 
-    //console.log(data);
-
     const bingResponse: ISimplifiedResponse = {
         searchEngineName: 'Bing',
         snippet: data.webPages?.value[0].snippet,
-        url: data.webPages?.value[0].url,
+        mainUrl: data.webPages?.value[0].url,
         totalResults: data.webPages?.totalEstimatedMatches,
         searchTerms: data.queryContext?.alteredQuery
             ? data.queryContext?.alteredQuery
@@ -37,12 +37,10 @@ const mapBing = (response: AxiosResponse<IBingResponse>, duration: number): ISim
             return searchPlusRelated;
         })
     }
-
-    console.log("HELLO");
-    console.log(bingResponse);
     return bingResponse;
 }
 
+// TODO: Image and Video results
 const mapBingResults = (webPages: IWebPageValue[]) => {
     const searchPlusResults: IResult[] = webPages.map(bingPage => {
         const searchPlusResult: IResult = {
@@ -55,10 +53,36 @@ const mapBingResults = (webPages: IWebPageValue[]) => {
     return searchPlusResults;
 }
 
-// const mapGoogle = (response: AxiosResponse<IGoogleResponse>): ISearchPlusResponse => {
-    
-// }
+const mapGoogle = (response: AxiosResponse<IGoogleResponse>, duration: number): ISimplifiedResponse => {
+    const data = response.data;
 
-// const mapDuckDuckGo = (response: AxiosResponse<IDuckDuckGoResponse>): ISearchPlusResponse => {
+    const googleResponse: ISimplifiedResponse = {
+        searchEngineName: 'Google',
+        snippet: data.items[0]?.snippet,
+        mainUrl: data.items[0]?.link,
+        totalResults: parseInt(data.searchInformation?.totalResults),
+        searchTerms: data.queries?.request[0]?.searchTerms,
+        searchTime: duration,
+        results: mapGoogleResults(data.items)
+    }
+
+    return googleResponse;
+}
+
+const mapGoogleResults = (items: IItem[]): IResult[] => {
+    const searchPlusResults: IResult[] = items.map(item => {
+        const searchPlusResult: IResult = {
+            title: item.title,
+            link: item.link,
+            snippet: item.snippet,
+            thumbnail: item.pagemap?.cse_thumbnail?.[0].src
+        }
+
+        return searchPlusResult;
+    })
+    return searchPlusResults;
+}
+
+// const mapDuckDuckGo = (response: AxiosResponse<IDuckDuckGoResponse>): ISimplifiedResponse => {
     
 // }

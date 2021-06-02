@@ -9,6 +9,12 @@ export interface IQueries {
     nextPage: IRequest[]
 }
 
+export interface IRequest {
+    title: string,
+    searchTerms: string,
+    safe: string
+}
+
 export interface ISearchInformation {
     searchTime: number,
     formattedSearchTime: string,
