@@ -3,9 +3,11 @@ export interface IDuckDuckGoResponse {
     AbstractSource: string,
     AbstractUrl: string,
     Entity: string,
+    Heading: string,
     Image: string,
     Infobox: IInfobox,
-    RelatedTopics: ICategorisedRelatedTopic[]
+    RelatedTopics: ICategorisedRelatedTopic[],
+    Results: IResult[]
 }
 
 export interface IInfobox {
@@ -27,4 +29,10 @@ export interface IRelatedTopic {
 export interface ICategorisedRelatedTopic extends IRelatedTopic {
     Name: string,
     Topics: IRelatedTopic[]
+}
+
+export interface IResult {
+    FirstURL: string,
+    Icon: {URL: string},
+    Text: string
 }

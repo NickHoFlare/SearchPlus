@@ -1,6 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { IBingResponse, IGoogleResponse, IDuckDuckGoResponse, ISearchPlusResponse } from '../types';
 import { IWebPageValue } from '../types/bing';
+import { ICategorisedRelatedTopic, IResult as IDuckResult } from '../types/duckDuckGo';
 import { IItem } from '../types/google';
 import { IRelated, IResult, ISimplifiedResponse } from '../types/searchPlus';
 
@@ -11,7 +12,7 @@ export const mapResponses =
         responses: [
             mapBing(responses[0], durations[0]),
             mapGoogle(responses[1], durations[1]), 
-            //mapDuckDuckGo(responses[2], durations[2])
+            mapDuckDuckGo(responses[2], durations[2])
         ]
     };
 }
@@ -77,12 +78,47 @@ const mapGoogleResults = (items: IItem[]): IResult[] => {
             snippet: item.snippet,
             thumbnail: item.pagemap?.cse_thumbnail?.[0].src
         }
-
         return searchPlusResult;
     })
     return searchPlusResults;
 }
 
-// const mapDuckDuckGo = (response: AxiosResponse<IDuckDuckGoResponse>): ISimplifiedResponse => {
-    
-// }
+const mapDuckDuckGo = (response: AxiosResponse<IDuckDuckGoResponse>, duration: number): ISimplifiedResponse => {
+    const data = response.data;
+
+    const duckResponse: ISimplifiedResponse = {
+        searchEngineName: 'DuckDuckGo',
+        snippet: data.Abstract,
+        mainUrl: data.AbstractUrl,
+        totalResults: 1,
+        searchTerms: data.Heading,
+        searchTime: duration,
+        entity: data.Entity,
+        related: mapDuckDuckGoRelated(data.RelatedTopics),
+        results: mapDuckDuckGoResults(data.Results)
+    }
+    return duckResponse;
+}
+
+const mapDuckDuckGoRelated = (relatedTopics: ICategorisedRelatedTopic[]): IRelated[] => {
+    const searchPlusRelated: IRelated[] = relatedTopics.map(topic => {
+        const related: IRelated = {
+            title: topic.Text,
+            url: topic.FirstURL
+        }
+        return related;
+    })
+    return searchPlusRelated;
+}
+
+const mapDuckDuckGoResults = (results: IDuckResult[]): IResult[] => {
+    const searchPlusResults: IResult[] = results.map(result => {
+        const searchPlusResult: IResult = {
+            title: result.Text,
+            link: result.FirstURL,
+            snippet: result.Text,
+        }
+        return searchPlusResult;
+    })
+    return searchPlusResults;
+}
